@@ -1,0 +1,115 @@
+/* Generelle stilregler */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Arial", sans-serif;
+}
+
+body {
+    background: #f5f7fa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Hovedcontainer */
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Overskrift */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Skjema for å legge til oppgaver */
+form {
+    display: flex;
+    gap: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Liste over oppgaver */
+ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.task-item {
+    background: #fff;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-item input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.task-item span {
+    flex: 1;
+    font-size: 16px;
+}
+
+.task-item button {
+    background: #dc3545;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.task-item button:hover {
+    background: #b52a37;
+}
+
+/* Responsiv tilpasning */
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}
