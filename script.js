@@ -1,7 +1,8 @@
-// Henter elementene fra HTML
+// Henter elementer fra HTML
 const taskInput = document.getElementById("taskInput");
 const taskForm = document.getElementById("taskForm");
 const listContainer = document.getElementById("listContainer");
+const showCompletedCheckbox = document.getElementById("showCompleted"); // Ny checkbox for fullførte oppgaver
 
 // Lager et objekt for filtrering og en tom liste for oppgaver
 let filters = { showCompleted: false };
@@ -18,6 +19,7 @@ const loadFromStorage = () => {
 
     if (storedFilters) {
         filters = JSON.parse(storedFilters);
+        showCompletedCheckbox.checked = filters.showCompleted; // Oppdaterer checkbox basert på lagret verdi
     }
 };
 
@@ -61,6 +63,9 @@ const filterArray = (taskArr) => {
 const buildPage = (task) => {
     const taskContainer = document.createElement("li");
     taskContainer.classList.add("task-item");
+    if (task.completed) {
+        taskContainer.classList.add("completed"); // Legger til en klasse for fullførte oppgaver
+    }
 
     const timeStampElement = document.createElement("span");
     timeStampElement.textContent = `[${task.timestamp}] `;
@@ -100,6 +105,13 @@ const renderPage = () => {
     const filteredTasks = filterArray(tasks);
     filteredTasks.forEach(buildPage);
 };
+
+// Eventlistener for checkbox som viser/skjuler fullførte oppgaver
+showCompletedCheckbox.addEventListener("change", () => {
+    filters.showCompleted = showCompletedCheckbox.checked;
+    saveFiltersToStorage();
+    renderPage();
+});
 
 // Laster data og klargjør event listeners
 loadFromStorage();
