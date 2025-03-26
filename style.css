@@ -26,11 +26,16 @@ body {
     max-width: 400px;
 }
 
+#showCompleted {
+    margin-bottom: 2rem;
+    background-color: red;
+}
+
 /* Overskrift */
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 }
 
 /* Skjema for å legge til oppgaver */
