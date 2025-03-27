@@ -84,7 +84,7 @@ const buildPage = (task) => {
     }
 
     const timeStampElement = document.createElement("span");
-    timeStampElement.textContent = `[${new Date(task.timestamp).toLocaleString()}] `;
+    timeStampElement.innerHTML = `<p class="date-time">[${new Date(task.timestamp).toLocaleString()}]<p> `;
 
     const descriptionElement = document.createElement("span");
     descriptionElement.textContent = task.description;

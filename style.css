@@ -18,12 +18,12 @@ body {
 
 /* Hovedcontainer */
 .container {
-    background: white;
+    background-color: rgb(196, 196, 196);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 900px;
 }
 
 #showCompleted {
@@ -91,7 +91,11 @@ ul {
 
 .task-item span {
     flex: 1;
-    font-size: 16px;
+    font-size: 14px;
+}
+
+.date-time {
+    font-size:0.8rem;
 }
 
 .task-item button {
