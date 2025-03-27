@@ -12,6 +12,14 @@
         <label>
             <input type="checkbox" id="showCompleted" /> Vis fullførte oppgaver
         </label>
+
+        <select name="sort-by" id="sort-by">
+            <option value="time-desc">Nyeste</option>
+            <option value="time-asc">Eldste</option>
+            <option value="alpha-desc">Å til A</option>
+            <option value="alpha-asc">A til Å</option>
+        </select>
+     
         <form id="taskForm">
             <input
                 type="text"
@@ -21,6 +29,9 @@
             />
             <button type="submit">Legg til</button>
         </form>
+
+       
+
         <ul id="listContainer"></ul>
 
         <script src="script.js"></script>

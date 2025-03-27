@@ -104,6 +104,48 @@ ul {
     background: #b52a37;
 }
 
+/**/
+
+select {
+    appearance: none;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+select:hover {
+    border-color: #bbb;
+}
+
+select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+select option {
+    padding: 10px;
+    font-size: 16px;
+    background: #fff;
+    color: #333;
+}
+
+select option:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+
 /* Responsiv tilpasning */
 @media (max-width: 480px) {
     .container {

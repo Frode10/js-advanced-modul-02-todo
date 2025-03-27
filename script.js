@@ -2,10 +2,11 @@
 const taskInput = document.getElementById("taskInput");
 const taskForm = document.getElementById("taskForm");
 const listContainer = document.getElementById("listContainer");
-const showCompletedCheckbox = document.getElementById("showCompleted"); // Ny checkbox for fullførte oppgaver
+const showCompletedCheckbox = document.getElementById("showCompleted");
+const sortBySelect = document.getElementById("sort-by");
 
 // Lager et objekt for filtrering og en tom liste for oppgaver
-let filters = { showCompleted: false };
+let filters = { showCompleted: false, sortBy: "time-desc" };
 let tasks = [];
 
 // Laster lagrede oppgaver og filtre fra LocalStorage
@@ -19,7 +20,8 @@ const loadFromStorage = () => {
 
     if (storedFilters) {
         filters = JSON.parse(storedFilters);
-        showCompletedCheckbox.checked = filters.showCompleted; // Oppdaterer checkbox basert på lagret verdi
+        showCompletedCheckbox.checked = filters.showCompleted;
+        sortBySelect.value = filters.sortBy; // Setter select til lagret verdi
     }
 };
 
@@ -35,23 +37,22 @@ const saveFiltersToStorage = () => {
 
 // Legger til en ny oppgave
 const addTodoHandler = (event) => {
-    event.preventDefault(); // Hindrer siden fra å laste på nytt
+    event.preventDefault();
 
     const taskText = taskInput.value.trim();
-    if (taskText === "") return; // Stopper hvis input er tom
+    if (taskText === "") return;
 
     const newTask = {
-        id: Date.now(), // Unik ID basert på tidspunkt
+        id: Date.now(),
         description: taskText,
         completed: false,
-        timestamp: new Date().toLocaleString(), // Legger til tidsstempel
+        timestamp: new Date().getTime(), // Lagrer som timestamp for enklere sortering
     };
 
     tasks.push(newTask);
     saveTaskToStorage();
     renderPage();
-
-    taskInput.value = ""; // Nullstiller input-feltet
+    taskInput.value = "";
 };
 
 // Filtrerer oppgaver basert på `filters.showCompleted`
@@ -59,16 +60,31 @@ const filterArray = (taskArr) => {
     return taskArr.filter((task) => filters.showCompleted || !task.completed);
 };
 
+// Sorterer oppgaver basert på valgt sorteringsmetode
+const sortTasks = (taskArr) => {
+    return taskArr.sort((a, b) => {
+        if (filters.sortBy === "time-desc") {
+            return b.timestamp - a.timestamp;
+        } else if (filters.sortBy === "time-asc") {
+            return a.timestamp - b.timestamp;
+        } else if (filters.sortBy === "alpha-desc") {
+            return b.description.localeCompare(a.description);
+        } else if (filters.sortBy === "alpha-asc") {
+            return a.description.localeCompare(b.description);
+        }
+    });
+};
+
 // Bygger HTML for hver oppgave
 const buildPage = (task) => {
     const taskContainer = document.createElement("li");
     taskContainer.classList.add("task-item");
     if (task.completed) {
-        taskContainer.classList.add("completed"); // Legger til en klasse for fullførte oppgaver
+        taskContainer.classList.add("completed");
     }
 
     const timeStampElement = document.createElement("span");
-    timeStampElement.textContent = `[${task.timestamp}] `;
+    timeStampElement.textContent = `[${new Date(task.timestamp).toLocaleString()}] `;
 
     const descriptionElement = document.createElement("span");
     descriptionElement.textContent = task.description;
@@ -98,17 +114,24 @@ const buildPage = (task) => {
     listContainer.appendChild(taskContainer);
 };
 
-// Rendersiden basert på lagrede oppgaver og filter
+// Oppdaterer siden basert på sortering og filtrering
 const renderPage = () => {
-    listContainer.innerHTML = ""; // Nullstiller listen
-
+    listContainer.innerHTML = "";
     const filteredTasks = filterArray(tasks);
-    filteredTasks.forEach(buildPage);
+    const sortedTasks = sortTasks(filteredTasks);
+    sortedTasks.forEach(buildPage);
 };
 
 // Eventlistener for checkbox som viser/skjuler fullførte oppgaver
 showCompletedCheckbox.addEventListener("change", () => {
     filters.showCompleted = showCompletedCheckbox.checked;
+    saveFiltersToStorage();
+    renderPage();
+});
+
+// Eventlistener for sorteringsvalg
+sortBySelect.addEventListener("change", (e) => {
+    filters.sortBy = e.target.value;
     saveFiltersToStorage();
     renderPage();
 });
